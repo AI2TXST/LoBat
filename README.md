@@ -1,5 +1,6 @@
-#An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification
-##Team: Wenhan Tao, Carly Naundorff, Cerise Mensah, Mylene Q. Farias, Sarah Fritts, and Jelena Tešić
+# An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification
+
+## Team: Wenhan Tao, Carly Naundorff, Cerise Mensah, Mylene Q. Farias, Sarah Fritts, and Jelena Tešić
 
 The benchmark contains: 
 * Open bat detection dataset with **annotated images (YOLO format)**
