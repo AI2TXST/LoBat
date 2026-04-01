@@ -1,25 +1,18 @@
-#	
-Bat Motion Target Detection in Low-Light Video Scenes: An Open Low-Light Bat Video Dataset with MOG2--YOLO Baselines
+#An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification
+##Team: Wenhan Tao, Carly Naundorff, Cerise Mensah, Mylene Q. Farias, Sarah Fritts, and Jelena Tešić
 
-Open bat detection dataset with **annotated images (YOLO format)**, **20 raw videos**, and **baseline scripts** (MOG2 + YOLOv8) for reproducible experiments.
+The benchmark contains: 
+* Open bat detection dataset with **annotated images (YOLO format)**
+* **20 raw videos**
+* **baseline training and evalulation scripts** (MOG2 + YOLO) for reproducible experiments.
 
----
 
-## Quick Links
-
-* **Dataset (Google Drive):**
+## **Dataset on Google Drive**
   [https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto](https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto)
 
----
-
-## Dataset Contents
-
 The Drive folder contains two zip files:
-
 * **Bat Images.zip** — labeled images for **YOLO object detection**
 * **Bat Videos.zip** — **20 raw videos** (unlabeled)
-
----
 
 ## Sample Visualizations
 
@@ -47,17 +40,14 @@ The Drive folder contains two zip files:
   </p>
   <figcaption>
     <b>Figure 2. Shape diversity examples (viewpoint-dependent appearance).</b>
-    Bat appearance varies substantially across different viewpoints and flight poses, leading to diverse shapes and aspect ratios.
+    Bat appearance varies substantially across viewpoints and flight poses, resulting in diverse shapes and aspect ratios.
     This variability motivates robust detection under orientation and scale changes.
   </figcaption>
 </figure>
 
-
-
-## Bat Images (YOLO Labeled)
+# Replorducibility Pipeline
 
 After extracting `Bat Images.zip`, the dataset follows the standard YOLO layout:
-
 ```
 Bat Images/
   data.yaml
@@ -71,45 +61,38 @@ Bat Images/
     test/
 ```
 
-### Splits (as reported in the paper)
+## Splits (as reported in the paper)
 
 * **train:** 4990
 * **val:** 286
 * **test:** 143
-
 > The train split is larger because it includes augmented images.
 
-### data.yaml
-
+## data.yaml
 * Required for YOLO training (paths + class names).
 * You may need to **update the dataset root path** inside `data.yaml` based on your local location.
 * Please **do not change** class label names/order.
 
-### Augmented vs. Original Images (optional)
+## Augmented vs. Original Images (optional)
 
 * **Original:** filenames start with `frame...`
 * **Augmented:** filenames use prefixes (e.g., `blurred_frame...`, `dark_frame...`)
 
-If you want only original data, filter images starting with `frame...` and keep the matching label files.
+If you want only the original data, filter images that start with `frame...` and keep the matching label files.
 
-### Labels
+## Labels
 
 * YOLO `.txt` bounding boxes under `labels/` (object detection, not segmentation).
 * If you need COCO JSON or other formats, convert from YOLO using your preferred tool.
 
----
-
 ## Bat Videos (Raw)
 
 After extracting `Bat Videos.zip`, you will find **19 raw videos**:
-
 * Mostly visible-light recordings; filenames use **location + date**
 * Suffixes like `_1`, `_2`, `_3` indicate multiple segments from the same session
 * Includes **one infrared video** as an additional cross-sensor test case
 
 > Videos are **unlabeled** and intended for benchmarking, testing trained models, or future labeling.
-
----
 
 ## Training & Validation Snapshots
 
@@ -151,7 +134,7 @@ After extracting `Bat Videos.zip`, you will find **19 raw videos**:
 </figure>
 
 
-## Baseline Code (MOG2 + YOLOv8)
+#Baseline Code (MOG2 + YOLOv8)
 
 This repository includes baseline scripts for:
 
@@ -179,8 +162,6 @@ Before running, edit each script and update:
 * `video_path` / `img_dir` / `label_dir`
 * `model_path`
 * `save_dir`
-
----
 
 ## Script Overview
 
@@ -227,9 +208,7 @@ Lightweight **video inference** script for fast qualitative testing and runtime 
 
 Recommended when you mainly need **an annotated video output** plus basic speed statistics.
 
----
-
-### `yolov8m.py` (training)
+## `yolov8m.py` (training)
 
 YOLOv8 **training script** for this dataset. It provides **two training variants**:
 
@@ -249,9 +228,7 @@ YOLOv8 **training script** for this dataset. It provides **two training variants
 * This script currently uses **absolute paths**; you must update them before running.
 * The active variant loads `best.pt` as initialization. Since `resume=False`, it **loads weights but does not resume** optimizer/epoch state (i.e., it starts a fresh run initialized from those weights). 
 
----
-
-### `test_mog2+yolov8m.py`
+## `test_mog2+yolov8m.py`
 
 Image-set **evaluation** script (YOLO labels + IoU matching) for quantitative testing on the labeled split.
 
@@ -270,7 +247,6 @@ Note:
 
 Recommended when you need **PR/F1 numbers** on the labeled image test set.
 
----
 
 ## Run Example
 
@@ -278,9 +254,7 @@ Recommended when you need **PR/F1 numbers** on the labeled image test set.
 python finaldetect.py
 ```
 
----
-
-## Support
+# Support
 
 If you have issues accessing the Drive link or downloading the dataset, please open a GitHub issue.
 
