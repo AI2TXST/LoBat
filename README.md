@@ -16,7 +16,7 @@ Open bat detection dataset with **annotated images (YOLO format)**, **19 raw vid
 The Drive folder contains two zip files:
 
 * **Bat Images.zip** — labeled images for **YOLO object detection**
-* **Bat Videos.zip** — **19 raw videos** (unlabeled)
+* **Bat Videos.zip** — **20 raw videos** (unlabeled)
 
 ---
 
@@ -72,9 +72,9 @@ Bat Images/
 
 ### Splits (as reported in the paper)
 
-* **train:** 5010
+* **train:** 4990
 * **val:** 286
-* **test:** 144
+* **test:** 143
 
 > The train split is larger because it includes augmented images.
 
