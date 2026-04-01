@@ -1,4 +1,5 @@
-# BAT-SV-2025
+#	
+Bat Motion Target Detection in Low-Light Video Scenes: An Open Low-Light Bat Video Dataset with MOG2--YOLO Baselines
 
 Open bat detection dataset with **annotated images (YOLO format)**, **20 raw videos**, and **baseline scripts** (MOG2 + YOLOv8) for reproducible experiments.
 
