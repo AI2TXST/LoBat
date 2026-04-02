@@ -1,21 +1,52 @@
-# An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification
+# 🦇 LoBat: An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification
 
-## Team: Wenhan Tao, Carly Naundorff, Cerise Mensah, Mylene Q. Farias, Sarah Fritts, and Jelena Tešić
+<p align="center">
+  <a href="https://qoa10.github.io/">Wenhan Tao</a>, Carly Naundorff, Cerise Mensah, <a href="https://scholar.google.com/citations?hl=en&user=3m4U2zkAAAAJ">Mylene C. Q. Farias</a>, <a href="https://scholar.google.com/citations?hl=en&user=R0WFGeIAAAAJ">Sarah Fritts</a>, and <a href="https://scholar.google.com/citations?hl=en&user=jRLy9uoAAAAJ">Jelena Tešić</a>
+</p>
 
-The benchmark contains: 
-* Open bat detection dataset with **annotated images (YOLO format)**
-* **20 raw videos**
-* **baseline training and evalulation scripts** (MOG2 + YOLO) for reproducible experiments.
+<p align="center">
+  Texas State University
+</p>
 
+<p align="center">
+  <a href="https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto">Dataset</a> |
+  <a href="#reproducibility">Reproducibility</a> |
+  <a href="#citation">Citation</a>
+</p>
 
-## **Dataset on Google Drive**
-  [https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto](https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto)
+LoBat is an open benchmark for low-light bat detection, providing annotated images, raw videos, and reproducible MOG2+YOLO baselines for evaluation under challenging nighttime conditions.
+
+## Overview
+
+The benchmark contains:
+
+* Open bat detection dataset with **annotated images in YOLO format**
+* **Raw videos** collected under challenging low-light conditions
+* **Baseline training and evaluation scripts** based on **MOG2 + YOLO** for reproducible experiments
+
+## Dataset Highlights
+
+| Item              | Value                           |
+| ----------------- | ------------------------------- |
+| Task              | Low-light bat detection         |
+| Annotation format | YOLO bounding boxes             |
+| Image splits      | Train 4990 / Val 286 / Test 143 |
+| Raw videos        | 20                              |
+| Baseline          | MOG2 + YOLOv8                   |
+| Institution       | Texas State University          |
+
+## Dataset Download
+
+Dataset link:
+
+[Google Drive Folder](https://drive.google.com/drive/folders/1Q2BjR5mpYaQoZ7F73QW6Xd7n1Y_hJ88c?dmr=1&ec=wgc-drive-hero-goto)
 
 The Drive folder contains two zip files:
-* **Bat Images.zip** — labeled images for **YOLO object detection**
-* **Bat Videos.zip** — **20 raw videos** (unlabeled)
 
-## Sample Visualizations
+* **Bat Images.zip** — labeled images for **YOLO object detection**
+* **Bat Videos.zip** — raw videos for benchmarking and future study
+
+## Visual Examples
 
 <figure>
   <p align="center">
@@ -24,10 +55,8 @@ The Drive folder contains two zip files:
     </a>
   </p>
   <figcaption>
-    <b>Figure 1. Continuous-frame examples (why temporal context matters).</b>
-    In many scenes, bats are difficult to recognize from a single frame due to small size, motion blur, and low contrast.
-    Using consecutive frames provides stronger evidence for detection.
-    The location name shown in the <b>bottom-right</b> of each sub-image corresponds to the recording site.
+    <b>Figure 1. Continuous-frame examples.</b>
+    In many scenes, bats are difficult to recognize from a single frame because of small size, motion blur, and low contrast. Consecutive frames provide stronger evidence for detection. The location name shown in the bottom-right of each sub-image corresponds to the recording site.
   </figcaption>
 </figure>
 
@@ -40,16 +69,16 @@ The Drive folder contains two zip files:
     </a>
   </p>
   <figcaption>
-    <b>Figure 2. Shape diversity examples (viewpoint-dependent appearance).</b>
-    Bat appearance varies substantially across viewpoints and flight poses, resulting in diverse shapes and aspect ratios.
-    This variability motivates robust detection under orientation and scale changes.
+    <b>Figure 2. Shape diversity examples.</b>
+    Bat appearance varies substantially across viewpoints and flight poses, producing diverse shapes and aspect ratios. This variability motivates robust detection under orientation and scale changes.
   </figcaption>
 </figure>
 
-# Replorducibility Pipeline
+## Dataset Structure
 
 After extracting `Bat Images.zip`, the dataset follows the standard YOLO layout:
-```
+
+```text
 Bat Images/
   data.yaml
   images/
@@ -62,40 +91,47 @@ Bat Images/
     test/
 ```
 
-## Splits (as reported in the paper)
+### Split Information
 
 * **train:** 4990
 * **val:** 286
 * **test:** 143
-> The train split is larger because it includes augmented images.
 
-## data.yaml
-* Required for YOLO training (paths + class names).
-* You may need to **update the dataset root path** inside `data.yaml` based on your local location.
-* Please **do not change** class label names/order.
+The training split is larger because it includes augmented images.
 
-## Augmented vs. Original Images (optional)
+### data.yaml
 
-* **Original:** filenames start with `frame...`
-* **Augmented:** filenames use prefixes (e.g., `blurred_frame...`, `dark_frame...`)
+* Required for YOLO training
+* Update the dataset root path inside `data.yaml` according to your local machine
+* Do not change the class label names or class order
 
-If you want only the original data, filter images that start with `frame...` and keep the matching label files.
+### Augmented vs. Original Images
 
-## Labels
+* **Original images:** filenames start with `frame...`
+* **Augmented images:** filenames use prefixes such as `blurred_frame...` and `dark_frame...`
 
-* YOLO `.txt` bounding boxes under `labels/` (object detection, not segmentation).
-* If you need COCO JSON or other formats, convert from YOLO using your preferred tool.
+If only original data is needed, keep files starting with `frame...` and use the matching label files.
 
-## Bat Videos (Raw)
+### Labels
 
-After extracting `Bat Videos.zip`, you will find **19 raw videos**:
-* Mostly visible-light recordings; filenames use **location + date**
-* Suffixes like `_1`, `_2`, `_3` indicate multiple segments from the same session
-* Includes **one infrared video** as an additional cross-sensor test case
+* YOLO `.txt` bounding boxes are stored under `labels/`
+* The dataset is for **object detection**, not segmentation
+* Other formats such as COCO JSON can be generated externally if needed
 
-> Videos are **unlabeled** and intended for benchmarking, testing trained models, or future labeling.
+## Raw Videos
 
-## Training & Validation Snapshots
+After extracting `Bat Videos.zip`, the repository provides raw videos intended for benchmarking, testing trained models, or future labeling.
+
+The dataset includes 20 raw videos for benchmarking, testing trained models, and future annotation expansion.
+
+Suggested notes:
+
+* Mostly visible-light recordings
+* Filenames use **location + date** naming
+* Suffixes such as `_1`, `_2`, and `_3` indicate multiple segments from the same session
+* Includes one infrared video as an additional cross-sensor case
+
+## Training and Validation Snapshots
 
 <figure>
   <p align="center">
@@ -104,7 +140,8 @@ After extracting `Bat Videos.zip`, you will find **19 raw videos**:
     </a>
   </p>
   <figcaption>
-    <b>Figure 3. Training batch visualization.</b> Example training batch sampled from the YOLO dataloader.
+    <b>Figure 3. Training batch visualization.</b>
+    Example training batch sampled from the YOLO dataloader.
   </figcaption>
 </figure>
 
@@ -117,7 +154,8 @@ After extracting `Bat Videos.zip`, you will find **19 raw videos**:
     </a>
   </p>
   <figcaption>
-    <b>Figure 4. Validation batch (ground-truth labels).</b> Visualization of annotated bounding boxes on a validation batch.
+    <b>Figure 4. Validation batch with ground-truth labels.</b>
+    Visualization of annotated bounding boxes on a validation batch.
   </figcaption>
 </figure>
 
@@ -130,17 +168,18 @@ After extracting `Bat Videos.zip`, you will find **19 raw videos**:
     </a>
   </p>
   <figcaption>
-    <b>Figure 5. Validation batch (model predictions).</b> YOLOv8 prediction results on the same validation batch for qualitative comparison.
+    <b>Figure 5. Validation batch with model predictions.</b>
+    YOLOv8 prediction results on the same validation batch for qualitative comparison.
   </figcaption>
 </figure>
 
-
-#Baseline Code (MOG2 + YOLOv8)
+## Reproducibility
 
 This repository includes baseline scripts for:
 
-* **Video inference** with motion gating (MOG2) + YOLOv8
+* **Video inference** with motion gating using **MOG2 + YOLOv8**
 * **Image-set evaluation** with YOLO labels and IoU matching
+* **Training** with YOLOv8 on the provided labeled dataset
 
 ### Environment
 
@@ -149,115 +188,108 @@ This repository includes baseline scripts for:
 
 ### Install Dependencies
 
-```
+```bash
 pip install ultralytics opencv-python numpy pandas matplotlib torch
 ```
 
-> For GPU acceleration, install the CUDA-matching PyTorch build from the official PyTorch site.
+For GPU acceleration, install the CUDA-matching PyTorch build from the official PyTorch website.
 
-### Important: Update Paths Before Running
+### Important Setup Note
 
-All scripts currently use **absolute paths** (e.g., `/Users/...`).
-Before running, edit each script and update:
+The scripts currently use absolute paths. Before running, update the following as needed:
 
 * `video_path` / `img_dir` / `label_dir`
 * `model_path`
 * `save_dir`
 
-## Script Overview
+## Baseline Scripts
 
-### `finaldetect.py` (recommended)
+### `finaldetect.py`
 
-End-to-end **video detection + analysis** pipeline (MOG2 + YOLOv8), designed for reproducible reporting.
+End-to-end **video detection + analysis** pipeline based on **MOG2 + YOLOv8**.
 
-* **Motion gating (MOG2)** to decide whether a frame should be analyzed (reduces unnecessary inference).
-* **Stride-based triggering**: runs YOLOv8 only every *N* frames (configurable) when motion is present.
-* Performs **YOLOv8 inference on triggered frames** and records per-trigger results:
+Main functions:
 
-  * timestamp / frame index
-  * number of detections (bat_count)
-  * confidence statistics (mean / max)
-  * optional condition label (e.g., baseline vs. device-enabled)
-* Saves **structured outputs** for analysis and paper writing:
+* Motion gating with MOG2 to reduce unnecessary inference
+* Stride-based triggering for configurable frame skipping
+* YOLOv8 inference on triggered frames
+* Structured outputs including CSV summaries and analysis-ready metrics
+* Plot generation for reporting and visualization
 
-  * `detections.csv` (per-trigger records)
-  * summary metrics (`video_metrics.txt`)
-  * aggregated tables (minute-bin statistics, trends)
-* Generates **publication-ready figures** (PNG + PDF), e.g.:
-
-  * histogram of detections per frame
-  * minute-level trends
-  * cumulative bat-minutes curve (depending on the enabled plotting section)
-
-Recommended when you want **CSV + plots + final metrics** aligned with the paper.
-
----
+Recommended when the goal is **quantitative reporting with CSV, plots, and summary metrics**.
 
 ### `video_mog2+yolov8.py`
 
-Lightweight **video inference** script for fast qualitative testing and runtime comparison.
+Lightweight **video inference** script for fast qualitative testing.
 
-* Uses **MOG2 motion detection** to gate inference (only run YOLO when motion is detected).
-* Uses a configurable **frame stride** (e.g., every 3 frames) to further reduce compute.
-* Writes an **annotated output video** (`annotated_video.mp4`) with predicted boxes and labels.
-* Writes a concise runtime summary (`video_metrics.txt`), including:
+Main functions:
 
-  * total frames read
-  * YOLO triggered frames
-  * total detections on triggered frames
-  * total / average inference time
+* MOG2-based motion-triggered inference
+* Configurable frame stride
+* Annotated output video generation
+* Basic runtime statistics in `video_metrics.txt`
 
-Recommended when you mainly need **an annotated video output** plus basic speed statistics.
+Recommended when the goal is **annotated video output and quick runtime inspection**.
 
-## `yolov8m.py` (training)
+### `yolov8m.py`
 
-YOLOv8 **training script** for this dataset. It provides **two training variants**:
+YOLOv8 **training script** for this dataset.
 
-* **Variant A (commented template):** a clean starter template for training `yolov8m.pt` from scratch, with conservative settings (useful if you want a minimal baseline or you already performed offline augmentation). 
-* **Variant B (active code):** continues training by **loading a previous `best.pt` checkpoint** and running a new training job with updated hyperparameters and Ultralytics augmentations enabled. 
+This script includes:
 
-**Key configurable parameters (edit in the script):**
+* A starter training template for `yolov8m.pt`
+* A weight-initialized training variant using a previous `best.pt`
+* Editable hyperparameters for epochs, image size, batch size, device, augmentation, and output management
 
-* `data`: path to `data.yaml`
-* `epochs`, `imgsz`, `batch`
-* `device`: set to `"mps"` for Apple Silicon acceleration (or `"cpu"` / CUDA device id)
-* augmentation knobs such as `mosaic`, `close_mosaic`, HSV jitter (`hsv_h`, `hsv_s`, `hsv_v`), `translate`, `scale`, `fliplr`
-* run/output management: `project`, `name`, `save_period`, `patience`, `workers` 
+Important notes:
 
-**Important notes:**
+* The script uses absolute paths and must be edited locally before use
+* Loading `best.pt` with `resume=False` initializes weights but starts a fresh optimization run
 
-* This script currently uses **absolute paths**; you must update them before running.
-* The active variant loads `best.pt` as initialization. Since `resume=False`, it **loads weights but does not resume** optimizer/epoch state (i.e., it starts a fresh run initialized from those weights). 
+### `test_mog2+yolov8m.py`
 
-## `test_mog2+yolov8m.py`
+Image-set **evaluation** script for quantitative testing on the labeled test split.
 
-Image-set **evaluation** script (YOLO labels + IoU matching) for quantitative testing on the labeled split.
+Main functions:
 
-* Loads images from `images/test` and GT labels from `labels/test` (YOLO `.txt` format).
-* Runs YOLOv8 prediction on each image and matches predictions to GT using an **IoU threshold**.
-* Computes standard detection metrics:
+* Loads images from `images/test` and ground-truth labels from `labels/test`
+* Runs YOLOv8 prediction and matches predictions to ground truth using an IoU threshold
+* Computes Precision, Recall, F1, and average inference time
+* Saves annotated images and outputs `metrics.txt`
 
-  * Precision / Recall / F1
-  * average inference time per image
-* Saves **annotated images** (predicted boxes drawn) into `save_dir`.
-* Outputs a `metrics.txt` summary with counts and final metrics.
+## Quick Start
 
-Note:
-
-* If your current version forces inference on every image (e.g., `do_infer = True`), then MOG2 is **not used to skip inference** and functions mainly as an optional motion-mask component. If you enable gating, evaluation metrics should account for skipped images accordingly.
-
-Recommended when you need **PR/F1 numbers** on the labeled image test set.
-
-
-## Run Example
-
-```
+```bash
 python finaldetect.py
 ```
 
-# Support
+## Notes for Final README Cleanup
 
-If you have issues accessing the Drive link or downloading the dataset, please open a GitHub issue.
+Before publishing the final version, verify and unify the following:
 
----
+* spelling corrections such as **Reproducibility** and **evaluation**
+* whether a **paper link** should be added near the top
+* whether a separate **pipeline figure** should be added to better match benchmark-style repositories
 
+## Citation
+
+### ACM Reference Format
+
+Wenhan Tao, Carly Naundorff, Cerise Mensah, Mylene C. Q. Farias, Sarah Fritts, and Jelena Tešić. 2026. An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification. In Proceedings of ACM International Conference on Multimedia (ACM MM ’26). ACM, New York, NY, USA, 7 pages. [https://doi.org/10.1145/XXXXXXXX.XXXXXXX](https://doi.org/10.1145/XXXXXXXX.XXXXXXX)
+
+```bibtex
+@inproceedings{tao2026lobat,
+  author    = {Wenhan Tao and Carly Naundorff and Cerise Mensah and Mylene C. Q. Farias and Sarah Fritts and Jelena Teši{\'c}},
+  title     = {An Open Low-Light Bat Video Dataset with MOG2-YOLO Baselines for Bat Identification},
+  booktitle = {Proceedings of ACM International Conference on Multimedia (ACM MM '26)},
+  year      = {2026},
+  publisher = {ACM},
+  address   = {New York, NY, USA},
+  pages     = {7},
+  doi       = {10.1145/XXXXXXXX.XXXXXXX}
+}
+```
+
+## Contact
+
+If you have issues accessing the dataset or reproducing the baseline, please open a GitHub issue or contact the project maintainers.
