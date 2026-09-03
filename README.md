@@ -82,7 +82,8 @@ The Drive folder contains the released image benchmark and source videos.
 Main archives include:
 
 * **Bat Images.zip** — annotated benchmark images and YOLO-format labels
-* **Bat Videos.zip** — continuous LWIR thermal source videos
+* **batvideo.zip** — continuous LWIR thermal source videos
+* **best.pt** — trained YOLOv8 model weights used for the baseline experiments
 
 ---
 
